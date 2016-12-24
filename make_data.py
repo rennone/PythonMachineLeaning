@@ -6,6 +6,20 @@ from sklearn.linear_model import LogisticRegression
 
 plt.style.use('ggplot')
 
+def make_data_plane(N):
+    # データ点のために乱数列を固定
+    np.random.seed(0)
+
+    # ランダムな N×2 行列を生成 = 2次元空間上のランダムな点 N 個
+    X = np.random.randn(N, 2)
+
+    def h(x, y):
+        return 5 * x + 3 * y - 1  # 真の分離平面 5x + 3y = 1
+
+    T = np.array([1 if h(x, y) > 0 else 0 for x, y in X])
+
+    return X,T
+
 def make_data(N, draw_plot=True, is_confused=False, confuse_bin=50):
     '''N個のデータセットを生成する関数
     データをわざと複雑にするための機能 is_confusedを実装する
@@ -42,27 +56,28 @@ def draw_split_line(weight_vector):
     y = (a * x + c)/-b
     plt.plot(x,y, alpha=0.3)
 
-df = make_data(1000)
-df.head(5)
-# plt.show()
+def sample():
+    df = make_data(1000)
+    df.head(5)
+    # plt.show()
 
-X = np.c_[ df['x'], df['y']]
-y = df['c']
+    X = np.c_[ df['x'], df['y']]
+    y = df['c']
 
-lr = AdalineSGD(eta=0.5,n_iter=100)
+    lr = AdalineSGD(eta=0.5,n_iter=100)
 
-lr.fit(X,y)
+    lr.fit(X,y)
 
-# plot_decision_regions(X, y, classifier=lr)
-print(lr.w_)
+    # plot_decision_regions(X, y, classifier=lr)
+    print(lr.w_)
 
-draw_split_line(lr.w_)
+    draw_split_line(lr.w_)
 
 
-plt.show()
+    plt.show()
 
-plt.plot(range(1,len(lr.cost_)+1), lr.cost_, marker='o')
-plt.xlabel('Epochs')
-plt.ylabel("Average Cost")
+    plt.plot(range(1,len(lr.cost_)+1), lr.cost_, marker='o')
+    plt.xlabel('Epochs')
+    plt.ylabel("Average Cost")
 
-plt.show()
+    plt.show()

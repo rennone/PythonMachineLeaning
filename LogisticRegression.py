@@ -49,16 +49,15 @@ class LogisticRegression(AdalineSGD):
         return self
 
     def _update_weight(self, xi, target):
-        output = self.net_input(xi)
-        phi_z = sigmoid(output)
-        error = target - phi_z
+        predict = self.activation(xi)
+        error = target - predict
 
         # 重み(w1~)の更新
         self.w_[1:] += self.eta * xi.dot(error)
         # 重みw0の更新
         self.w_[0] += self.eta * error
 
-        cost = -target*math.log1p(phi_z) - (1-target)*math.log1p(1-phi_z)
+        cost = -(target*np.log(predict) + (1-target)*np.log(1-predict))
         return cost
 
     def _shuffle(self, X, y):
@@ -67,15 +66,15 @@ class LogisticRegression(AdalineSGD):
 
     # 重みの初期化
     def _initialize_weights(self, m):
-        self.w_ = np.zeros(1+m)
+        self.w_ = np.random.rand(1+m)
         self.w_initialized = True
 
     def net_input(self, X):
         return np.dot(X, self.w_[1:]) + self.w_[0]
 
     def activation(self,X):
-        return self.net_input(X)
+        return sigmoid(self.net_input(X))
 
     def predict(self,X):
-        return np.where(self.activation(X) > 0.0, 1, -1)
+        return np.where(self.activation(X) > 0.5, 1, 0)
 
