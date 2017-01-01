@@ -50,11 +50,19 @@ for i in xrange(50):
     eta *= 0.9
 
 
+from LogisticRegression import LogisticRegression
 
 # 図を描くための準備
 seq = np.arange(-3, 3, 0.01)
 xlist, ylist = np.meshgrid(seq, seq)
-zlist = [sigmoid(np.inner(w, phi(x, y))) for x, y in zip(xlist, ylist)]
+# zlist = [sigmoid(np.inner(w, phi(x, y))) for x, y in zip(xlist, ylist)]
+
+lr = LogisticRegression(eta = 0.5, n_iter=100)
+lr.fit(X,T)
+
+print(lr.w_)
+
+zlist = [ lr.activation(np.array([x,y]).T) for x, y in zip(xlist, ylist)  ]
 
 # 分離平面と散布図を描画
 plt.imshow(zlist, extent=[-3,3,-3,3], origin='lower', cmap=plt.cm.PiYG_r)
