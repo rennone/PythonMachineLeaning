@@ -1,7 +1,9 @@
 import matplotlib.pyplot as plt
-from sigmoid import sigmoid
 import numpy as np
 
+from Functions.sigmoid import sigmoid
+
+# sigmoid関数のグラフ表示
 z = np.arange(-7,7,0.1)
 
 phi_z = sigmoid(z)

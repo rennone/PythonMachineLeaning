@@ -1,9 +1,10 @@
-from AdalineSGD import AdalineSGD
-from sigmoid import sigmoid
-from numpy.random import seed
-import numpy as np
-
 import math
+
+import numpy as np
+from numpy.random import seed
+
+from AdalineSGD import AdalineSGD
+from Functions.sigmoid import sigmoid
 
 
 class LogisticRegression(AdalineSGD):

@@ -1,26 +1,16 @@
-from LogisticRegression import LogisticRegression
 import matplotlib.pyplot as plt
-from SampleSetReader import ReadIris
-from SampleSetReader import ToStd
-from plot_decision_regions import plot_decision_regions
 
+from DataSet.iris import learn_iris
+from LogisticRegression import LogisticRegression
 
-X,y = ReadIris()
-X_std = ToStd(X)
-ada = LogisticRegression(n_iter=15,eta=0.01,random_state=1)
-ada.fit(X_std,y)
-plot_decision_regions(X_std, y, classifier=ada)
+# 独自ロジスティック回帰のテスト
+lr = LogisticRegression(n_iter=15,eta=0.01,random_state=1)
 
-plt.title('Adaline-Stochastic Gradient Descent')
-plt.xlabel('sepal length[standardized]')
-plt.ylabel('petal length[standardized]')
+# 学習させる
+learn_iris(classifier=lr, title='LogisticRegression')
 
-plt.legend(loc='upper left')
-plt.tight_layout()
-plt.show()
-
-plt.plot(range(1,len(ada.cost_)+1), ada.cost_, marker='o')
+# コスト量の遷移グラフ
+plt.plot(range(1, len(lr.cost_)+1), lr.cost_, marker='o')
 plt.xlabel('Epochs')
 plt.ylabel("Average Cost")
-
 plt.show()

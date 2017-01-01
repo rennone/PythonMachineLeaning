@@ -2,6 +2,8 @@ from sklearn.linear_model import LogisticRegression
 from SampleSetReader import ReadStdIrisTrainTest
 from plot_decision_regions import plot_decision_region_iris
 import numpy as np
+
+
 X_train_std, X_test_std, y_train, y_test = ReadStdIrisTrainTest()
 lr = LogisticRegression(C=1000.0, random_state=0)
 lr.fit(X_train_std, y_train)
