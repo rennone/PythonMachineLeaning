@@ -1,6 +1,6 @@
 # ゼロから作るDeepLearning参照
 
-class MulLayer:
+class Mul:
     def __init__(self):
         self.x = None
         self.y = None

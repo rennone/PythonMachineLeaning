@@ -1,6 +1,6 @@
 import numpy as np
 
-class SigmoidLayer:
+class Sigmoid:
     def __init__(self):
         self.out = None
 

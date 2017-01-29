@@ -32,7 +32,7 @@ def softmax(x):
     if x.ndim == 2:
         # 転置させないと, np.maxの次元数が想定通りにならない
         x = x.T
-        x = x - np.max(x, axis=0)# オーバーフロー対策
+        x = x - np.max(x, axis=0)  # オーバーフロー対策
         y = np.exp(x) / np.sum(np.exp(x), axis=0)
         return y.T
 
