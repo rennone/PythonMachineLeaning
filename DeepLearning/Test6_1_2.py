@@ -1,5 +1,6 @@
 import numpy as np
-from TwoLayerNet import TwoLayerNet
+from DeepLearning.TwoLayerNet import TwoLayerNet
+from DeepLearning.Optimizer.SGD import SGD
 
 # 5.7.4 ---------------------------
 from DataSet.mnist import load_mnist
@@ -13,16 +14,14 @@ train_size = x_train.shape[0]
 batch_size = 100
 learning_rate = 0.1
 net = TwoLayerNet(input_size=784, hidden_size=50,output_size=10)
-
+optimizer = SGD()
 for i in range(iters_num):
     batch_mask = np.random.choice(train_size, batch_size)
     x_batch = x_train[batch_mask]
     t_batch = t_train[batch_mask]
 
     grad = net.gradient(x_batch, t_batch)
-
-    for key in ('W1', 'b1', 'W2', 'b2'):
-        net.params[key] -= learning_rate * grad[key]
+    optimizer.update(net.params, grad)
 
     loss = net.loss(x_batch, t_batch)
     train_loss_list.append(loss)
